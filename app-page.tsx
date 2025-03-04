@@ -6,8 +6,8 @@ export default function Page() {
   return (
     <div>
       <GumloopPage />
-      {/* <DataInsights /> */}
-      {/* <CompetitorAnalysis /> */}
+      <DataInsights />
+      <CompetitorAnalysis />
     </div>
   )
 }
