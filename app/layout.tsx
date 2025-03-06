@@ -17,12 +17,15 @@ export const metadata: Metadata = {
   title: "Lantern AI | AI-First Brand Analytics",
   description: "AI is the new search. Lantern is the new SEO. Reach millions of consumers turning to AI for product recommendations.",
   keywords: "AI analytics, AI visibility, brand optimization, AI SEO, AI recommendations",
+  icons:{
+    icon: "/icon.svg",
+  },
   openGraph: {
     title: "Lantern AI | AI-First Brand Analytics",
     description: "AI is the new search. Lantern is the new SEO. Reach millions of consumers turning to AI for product recommendations.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/icon.svg",
         width: 1200,
         height: 630,
         alt: "Lantern AI",
