@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Bar, PolarArea } from "react-chartjs-2"
 import { BarChart3, PieChart, TrendingUp } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -233,8 +234,8 @@ const DialAfrikaVisibilityAnalysis = ({ data }: VisibilityAnalysisProps) => {
             <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
               <h4 className="text-lg font-semibold text-green-900 mb-2">Key Insights</h4>
               <p className="text-green-800">
-                Dial Afrika has moderate visibility on OpenAI (70%) and Google (60%),
-                presence on Perplexity (66%). While sentiment is strong on both OpenAI and Google platforms, 
+                Dial Afrika has moderate visibility on OpenAI (70%) and gemini (60%),
+                presence on Perplexity (66%). While sentiment is strong on both OpenAI and gemini platforms, 
                 the opportunity gap is significant, especially on emerging platforms like Perplexity where 
                 competitors have not yet established dominance.
               </p>

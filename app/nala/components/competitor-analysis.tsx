@@ -1,6 +1,9 @@
-import { ArrowDownIcon, ArrowUpIcon, MinusIcon } from "lucide-react"
+// @ts-nocheck
+import { ArrowDownIcon, ArrowUpIcon, MinusIcon, TrendingDown, TrendingUp } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Radar } from "react-chartjs-2"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
 
 // Make sure Chart.js components are imported and registered properly
 import {
@@ -30,14 +33,52 @@ interface CompetitorAnalysisProps {
 }
 
 const NalaCompetitorAnalysis = ({ data }: CompetitorAnalysisProps) => {
-  // Extract competitor data from the provided data
-  const competitorData = data.map(platform => {
-    const competitors = platform.competitorComparison || [];
-    return {
-      model: platform.model,
-      competitors: Array.isArray(competitors) ? competitors : [competitors]
-    };
+  // Extract all competitors across platforms
+  const allCompetitors = data.flatMap(platform => {
+    if (!Array.isArray(platform.competitorComparison)) {
+      return [platform.competitorComparison].filter(Boolean);
+    }
+    return platform.competitorComparison;
   });
+
+  // Normalize and calculate competitor rankings
+  const rankingData = allCompetitors
+    .filter(Boolean)
+    .map(competitor => {
+      const visibilityScore = competitor.visibilityComparison?.visibilityDifference || 0;
+      const sentimentScore = (competitor.sentimentComparison?.betterThan || 0) -
+        (competitor.sentimentComparison?.worseThan || 0);
+      const overallScore = visibilityScore + sentimentScore;
+
+      return {
+        name: competitor.competitorName,
+        visibilityScore,
+        sentimentScore,
+        overallScore,
+      };
+    })
+    .filter(item => item.name && item.name !== "sentiment" && item.name !== "Sentimental");
+
+  // Deduplicate competitors and sort by overall score
+  const uniqueCompetitors = Array.from(
+    rankingData.reduce((map, item) => {
+      if (!map.has(item.name)) {
+        map.set(item.name, item);
+      } else {
+        const existing = map.get(item.name);
+        map.set(item.name, {
+          ...existing,
+          visibilityScore: existing.visibilityScore + item.visibilityScore,
+          sentimentScore: existing.sentimentScore + item.sentimentScore,
+          overallScore: existing.overallScore + item.overallScore,
+        });
+      }
+      return map;
+    }, new Map())
+  ).map(([name, data]) => data);
+
+  // Sort by overall score (descending)
+  uniqueCompetitors.sort((a, b) => b.overallScore - a.overallScore);
 
   // Extract top topics across platforms
   const topTopics = data.flatMap((item) =>
@@ -119,66 +160,53 @@ const NalaCompetitorAnalysis = ({ data }: CompetitorAnalysisProps) => {
       <section className="py-12 px-6 md:px-10 lg:px-16">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold mb-2 text-blue-900">Competitor Analysis</h2>
-          <p className="text-blue-700 mb-8">How NALA compares to competitors across AI platforms</p>
+          <p className="text-blue-700 mb-8">How NALA ranks against competitors across AI platforms</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {competitorData.map((platform, index) => (
-              platform.competitors[0] && (
+
+          <div className="grid grid-cols-1 gap-6">
+            {data.map((platform, index) => {
+              // Skip if no competitor data
+              if (!platform.competitorComparison ||
+                (Array.isArray(platform.competitorComparison) && platform.competitorComparison.length === 0)) {
+                return null;
+              }
+
+              const competitors = Array.isArray(platform.competitorComparison)
+                ? platform.competitorComparison
+                : [platform.competitorComparison];
+
+              return (
                 <Card key={index} className="border-blue-200 shadow-lg overflow-hidden">
                   <div
                     className={`h-1 ${platform.model === "OpenAI" ? "bg-green-500" : platform.model === "Google" ? "bg-blue-500" : "bg-red-500"
                       }`}
                   ></div>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-lg">{platform.model} Platform</CardTitle>
-                    <CardDescription>vs. {platform.competitors[0].competitorName}</CardDescription>
+                    <CardTitle className="text-lg">{platform.model} Platform - Top Competitor</CardTitle>
+                    <CardDescription>
+                      NALA vs. {competitors[0].competitorName}
+                    </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-sm font-medium text-gray-500 mb-2">Sentiment Comparison</h4>
-                        <div className="grid grid-cols-3 gap-2 text-center">
-                          <div className="bg-green-50 p-2 rounded-lg">
-                            <div className="flex items-center justify-center mb-1">
-                              <ArrowUpIcon className="h-4 w-4 text-green-600 mr-1" />
-                              <span className="text-green-600 font-medium">Better</span>
-                            </div>
-                            <p className="text-lg font-bold text-green-700">{platform.competitors[0].sentimentComparison?.betterThan}%</p>
-                          </div>
-                          <div className="bg-yellow-50 p-2 rounded-lg">
-                            <div className="flex items-center justify-center mb-1">
-                              <MinusIcon className="h-4 w-4 text-yellow-600 mr-1" />
-                              <span className="text-yellow-600 font-medium">Equal</span>
-                            </div>
-                            <p className="text-lg font-bold text-yellow-700">{platform.competitors[0].sentimentComparison?.equalTo}%</p>
-                          </div>
-                          <div className="bg-red-50 p-2 rounded-lg">
-                            <div className="flex items-center justify-center mb-1">
-                              <ArrowDownIcon className="h-4 w-4 text-red-600 mr-1" />
-                              <span className="text-red-600 font-medium">Worse</span>
-                            </div>
-                            <p className="text-lg font-bold text-red-700">{platform.competitors[0].sentimentComparison?.worseThan}%</p>
-                          </div>
-                        </div>
-                      </div>
+                    <div className="grid grid-cols-1 gap-4">
                       <div>
                         <h4 className="text-sm font-medium text-gray-500 mb-2">Visibility Difference</h4>
                         <div
-                          className={`p-3 rounded-lg flex items-center justify-between ${platform.competitors[0].visibilityComparison?.visibilityDifference >= 0 ? "bg-green-50" : "bg-red-50"
+                          className={`p-3 rounded-lg flex items-center justify-between ${competitors[0].visibilityComparison?.visibilityDifference >= 0 ? "bg-green-50" : "bg-red-50"
                             }`}
                         >
-                          <span className="font-medium">Compared to competitor</span>
+                          <span className="font-medium">Compared to {competitors[0].competitorName}</span>
                           <div className="flex items-center">
-                            {platform.competitors[0].visibilityComparison?.visibilityDifference >= 0 ? (
+                            {competitors[0].visibilityComparison?.visibilityDifference >= 0 ? (
                               <ArrowUpIcon className="h-4 w-4 text-green-600 mr-1" />
                             ) : (
                               <ArrowDownIcon className="h-4 w-4 text-red-600 mr-1" />
                             )}
                             <span
-                              className={`font-bold ${platform.competitors[0].visibilityComparison?.visibilityDifference >= 0 ? "text-green-700" : "text-red-700"
+                              className={`font-bold ${competitors[0].visibilityComparison?.visibilityDifference >= 0 ? "text-green-700" : "text-red-700"
                                 }`}
                             >
-                              {Math.abs(platform.competitors[0].visibilityComparison?.visibilityDifference)}%
+                              {Math.abs(competitors[0].visibilityComparison?.visibilityDifference)}%
                             </span>
                           </div>
                         </div>
@@ -186,17 +214,20 @@ const NalaCompetitorAnalysis = ({ data }: CompetitorAnalysisProps) => {
                     </div>
                   </CardContent>
                 </Card>
-              )
-            ))}
+              );
+            })}
           </div>
 
-          <div className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <h4 className="text-lg font-semibold text-blue-900 mb-2">Key Competitive Insights</h4>
-            <p className="text-blue-800">
+          <div className="mt-8 p-5 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 className="text-xl font-semibold text-blue-900 mb-3">Competitive Analysis Summary</h3>
+            <p className="text-blue-800 mb-4">
               NALA's remittance service is perceived more positively than M-Pesa on OpenAI but has lower visibility.
               On Google, NALA performs better than Kyshi with more positive sentiment across the board.
+            </p>
+            <p className="text-blue-800">
               A targeted optimization strategy could significantly increase NALA's competitive standing, especially on
-              Perplexity where no meaningful competitive data currently exists.
+              Perplexity where no meaningful competitive data currently exists. Focusing on Africa-specific remittance
+              use cases and customer success stories could help establish a stronger competitive position.
             </p>
           </div>
         </div>

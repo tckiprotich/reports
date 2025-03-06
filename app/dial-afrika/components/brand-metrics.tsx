@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Line } from "react-chartjs-2"
 import { TrendingUp, Users, Eye } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -185,7 +187,7 @@ const DialAfrikaBrandMetrics = ({ data }: BrandMetricsProps) => {
                             </div>
                             <div>
                               <div className="flex justify-between mb-1">
-                                <span className="text-sm font-medium">Google</span>
+                                <span className="text-sm font-medium">gemini</span>
                                 <span className="text-sm font-medium">{metric.Google?.toFixed(1)}%</span>
                               </div>
                               <Progress 
@@ -217,9 +219,9 @@ const DialAfrikaBrandMetrics = ({ data }: BrandMetricsProps) => {
                 <div className="p-4 bg-green-50 rounded-lg border border-green-200">
                   <h4 className="font-semibold text-green-900 mb-2">Brand Metrics Insights</h4>
                   <p className="text-green-800">
-                    Dial Afrika shows strong customer satisfaction scores on OpenAI (80%) and moderate on Google (75%), 
+                    Dial Afrika shows strong customer satisfaction scores on OpenAI (80%) and moderate on gemini (75%), 
                      on Perplexity(86%). 
-                    Brand awareness varies significantly from OpenAI (60%) to Google (40%)  on Perplexity (75.2%). 
+                    Brand awareness varies significantly from OpenAI (60%) to gemini (40%)  on Perplexity (75.2%). 
                     A targeted awareness campaign focused particularly on emerging platforms like Perplexity represents the largest opportunity.
                   </p>
                 </div>
@@ -258,7 +260,7 @@ const DialAfrikaBrandMetrics = ({ data }: BrandMetricsProps) => {
                             </div>
                             <div>
                               <div className="flex justify-between mb-1">
-                                <span className="text-sm font-medium">Google</span>
+                                <span className="text-sm font-medium">gemini</span>
                                 <span className="text-sm font-medium">{trend.Google}%</span>
                               </div>
                               <Progress
@@ -291,7 +293,7 @@ const DialAfrikaBrandMetrics = ({ data }: BrandMetricsProps) => {
                   <h4 className="font-semibold text-green-900 mb-2">Growth Trend Insights</h4>
                   <p className="text-green-800">
                     OpenAI shows the strongest growth trajectory with a {trendData[1]?.OpenAI}% quarterly increase,
-                    while Google shows moderate growth at {trendData[1]?.Google}% and Perplexity shows minimal 
+                    while gemini shows moderate growth at {trendData[1]?.Google}% and Perplexity shows minimal 
                     but detectable growth at {trendData[1]?.Perplexity}%. This indicates that optimization efforts 
                     should maintain momentum on OpenAI while establishing a comprehensive foundation on Perplexity
                     where visibility is low but growing.

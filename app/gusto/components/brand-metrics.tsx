@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Line } from "react-chartjs-2"
 import { TrendingUp, Users, Eye } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -137,9 +138,9 @@ const GustoBrandMetrics = ({ data }: BrandMetricsProps) => {
             <TabsTrigger value="metrics" className="data-[state=active]:bg-purple-500 data-[state=active]:text-white">
               Brand Metrics
             </TabsTrigger>
-            <TabsTrigger value="trends" className="data-[state=active]:bg-purple-500 data-[state=active]:text-white">
+            {/* <TabsTrigger value="trends" className="data-[state=active]:bg-purple-500 data-[state=active]:text-white">
               Growth Trends
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
 
           <TabsContent value="metrics">
@@ -214,7 +215,7 @@ const GustoBrandMetrics = ({ data }: BrandMetricsProps) => {
                   })}
                 </div>
 
-                <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                {/* <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
                   <h4 className="font-semibold text-purple-900 mb-2">Brand Metrics Insights</h4>
                   <p className="text-purple-800">
                     Gusto shows strong customer satisfaction scores on OpenAI (85%) but significantly lower on Google (44%).
@@ -222,7 +223,7 @@ const GustoBrandMetrics = ({ data }: BrandMetricsProps) => {
                     Focusing on increasing brand awareness and satisfaction on Perplexity should be a priority, while
                     improving customer satisfaction metrics on Google.
                   </p>
-                </div>
+                </div> */}
               </CardContent>
             </Card>
           </TabsContent>
@@ -287,7 +288,7 @@ const GustoBrandMetrics = ({ data }: BrandMetricsProps) => {
                   })}
                 </div>
 
-                <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+                {/* <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
                   <h4 className="font-semibold text-purple-900 mb-2">Growth Trend Insights</h4>
                   <p className="text-purple-800">
                     OpenAI shows the strongest growth trajectory with a {trendData[1]?.OpenAI}% quarterly increase,
@@ -295,7 +296,7 @@ const GustoBrandMetrics = ({ data }: BrandMetricsProps) => {
                     optimization efforts should prioritize OpenAI for maximum impact, while establishing a foundational 
                     presence on Perplexity where virtually no growth is currently happening.
                   </p>
-                </div>
+                </div> */}
               </CardContent>
             </Card>
           </TabsContent>

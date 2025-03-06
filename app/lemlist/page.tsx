@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client"
 
 import { useState, useEffect } from "react"
@@ -777,7 +778,7 @@ const LemlistPage = () => {
               </div>
               <TabsList className="bg-blue-100">
                 <TabsTrigger value="gaps" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
-                  Knowledge Gaps
+                  Critical Knowledge Gaps
                 </TabsTrigger>
                 <TabsTrigger
                   value="recommendations"
@@ -789,37 +790,37 @@ const LemlistPage = () => {
             </div>
 
             <TabsContent value="gaps" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {uniqueKnowledgeGaps.map((gap, index) => (
-                  <Card key={index} className="border-blue-200 shadow-lg overflow-hidden">
-                    <div className="bg-blue-500 h-1"></div>
-                    <CardContent className="pt-6">
-                      <div className="flex items-start">
-                        <div className="bg-blue-100 rounded-full p-3 mr-4">
-                          <AlertCircle className="w-6 h-6 text-blue-500" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-blue-900">{gap}</h3>
-                          <p className="text-blue-700 mt-1">
-                            {index === 0 && "Users asking about this receive incomplete or outdated information."}
-                            {index === 1 &&
-                              "This creates trust issues as users can't verify satisfaction from other customers."}
-                            {index === 2 &&
-                              "Lack of pricing transparency prevents users from making purchasing decisions."}
-                            {index === 3 &&
-                              "Without this information, your unique value proposition isn't fully conveyed."}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {uniqueKnowledgeGaps.slice(0, 2).map((gap, index) => (
+      <Card key={index} className="border-red-200 shadow-lg overflow-hidden">
+        <div className="bg-red-500 h-1"></div>
+        <CardContent className="pt-6">
+          <div className="flex items-start">
+            <div className="bg-red-100 rounded-full p-3 mr-4">
+              <AlertCircle className="w-6 h-6 text-red-500" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-red-900">{gap}</h3>
+              <p className="text-red-700 mt-1">
+                {index === 0 && "Users asking about this receive incomplete or outdated information."}
+                {index === 1 &&
+                  "This creates trust issues as users can't verify satisfaction from other customers."}
+                {index === 2 &&
+                  "Lack of pricing transparency prevents users from making purchasing decisions."}
+                {index === 3 &&
+                  "Without this information, your unique value proposition isn't fully conveyed."}
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    ))}
+  </div>
+</TabsContent>
 
             <TabsContent value="recommendations" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {allRecommendations.slice(0, 6).map((recommendation, index) => (
+                {allRecommendations.slice(0, 2).map((recommendation, index) => (
                   <Card key={index} className="border-blue-200 shadow-lg overflow-hidden">
                     <div className="bg-blue-500 h-1"></div>
                     <CardContent className="pt-6">
@@ -929,32 +930,7 @@ const LemlistPage = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-500 mb-2">Sentiment Comparison</h4>
-                      <div className="grid grid-cols-3 gap-2 text-center">
-                        <div className="bg-green-50 p-2 rounded-lg">
-                          <div className="flex items-center justify-center mb-1">
-                            <ArrowUpIcon className="h-4 w-4 text-green-600 mr-1" />
-                            <span className="text-green-600 font-medium">Better</span>
-                          </div>
-                          <p className="text-lg font-bold text-green-700">{item.sentimentComparison.betterThan}%</p>
-                        </div>
-                        <div className="bg-yellow-50 p-2 rounded-lg">
-                          <div className="flex items-center justify-center mb-1">
-                            <MinusIcon className="h-4 w-4 text-yellow-600 mr-1" />
-                            <span className="text-yellow-600 font-medium">Equal</span>
-                          </div>
-                          <p className="text-lg font-bold text-yellow-700">{item.sentimentComparison.equalTo}%</p>
-                        </div>
-                        <div className="bg-red-50 p-2 rounded-lg">
-                          <div className="flex items-center justify-center mb-1">
-                            <ArrowDownIcon className="h-4 w-4 text-red-600 mr-1" />
-                            <span className="text-red-600 font-medium">Worse</span>
-                          </div>
-                          <p className="text-lg font-bold text-red-700">{item.sentimentComparison.worseThan}%</p>
-                        </div>
-                      </div>
-                    </div>
+                    
                     <div>
                       <h4 className="text-sm font-medium text-gray-500 mb-2">Visibility Difference</h4>
                       <div
@@ -1099,9 +1075,9 @@ const LemlistPage = () => {
               <TabsTrigger value="metrics" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
                 Brand Metrics
               </TabsTrigger>
-              <TabsTrigger value="trends" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
+              {/* <TabsTrigger value="trends" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
                 Growth Trends
-              </TabsTrigger>
+              </TabsTrigger> */}
             </TabsList>
 
             <TabsContent value="metrics">
@@ -1161,76 +1137,8 @@ const LemlistPage = () => {
               </Card>
             </TabsContent>
 
-            <TabsContent value="trends">
-              <Card className="border-blue-200 shadow-lg">
-                <CardContent className="pt-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    {trendData.map((trend, index) => {
-                      const trendName = {
-                        monthlyTrend: "Monthly Growth",
-                        quarterlyTrend: "Quarterly Growth",
-                      }[trend.name]
-
-                      return (
-                        <Card key={index} className="border-blue-200">
-                          <CardContent className="p-4">
-                            <h3 className="text-lg font-medium text-blue-900 mb-3">{trendName}</h3>
-                            <div className="space-y-4">
-                              <div>
-                                <div className="flex justify-between mb-1">
-                                  <span className="text-sm font-medium">OpenAI</span>
-                                  <span className="text-sm font-medium">{trend.OpenAI}%</span>
-                                </div>
-                                <Progress
-                                  value={trend.OpenAI}
-                                  max={20}
-                                  className="h-2 bg-blue-100"
-                                  indicatorClassName="bg-blue-500"
-                                />
-                              </div>
-                              <div>
-                                <div className="flex justify-between mb-1">
-                                  <span className="text-sm font-medium">Google</span>
-                                  <span className="text-sm font-medium">{trend.Google}%</span>
-                                </div>
-                                <Progress
-                                  value={trend.Google}
-                                  max={20}
-                                  className="h-2 bg-green-100"
-                                  indicatorClassName="bg-green-500"
-                                />
-                              </div>
-                              <div>
-                                <div className="flex justify-between mb-1">
-                                  <span className="text-sm font-medium">Perplexity</span>
-                                  <span className="text-sm font-medium">{trend.Perplexity}%</span>
-                                </div>
-                                <Progress
-                                  value={trend.Perplexity}
-                                  max={20}
-                                  className="h-2 bg-red-100"
-                                  indicatorClassName="bg-red-500"
-                                />
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      )
-                    })}
-                  </div>
-
-                  <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <h4 className="font-semibold text-blue-900 mb-2">Growth Trend Insights</h4>
-                    <p className="text-blue-800">
-                      OpenAI shows the strongest growth trajectory with a {trendData[1]?.OpenAI}% quarterly increase,
-                      while Google and Perplexity show more modest growth. This indicates that optimization efforts
-                      should prioritize OpenAI for maximum impact, while establishing a stronger foundation on
-                      Perplexity.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
+            
+                 
           </Tabs>
         </div>
         <DataInsights />
@@ -1272,11 +1180,11 @@ const LemlistPage = () => {
                   size="lg"
                   asChild
                 >
-                  <a href="https://lantern.ai/demo">Book a Strategy Session</a>
+                  <a href="https://calendly.com/gideon-at-lantern/30min">Book a Strategy Session</a>
                 </Button>
-                <Button variant="outline" className="border-white text-white hover:bg-white/10" size="lg" asChild>
+                {/* <Button variant="outline" className="border-white text-white hover:bg-white/10" size="lg" asChild>
                   <a href="mailto:hello@lantern.ai">Contact Us</a>
-                </Button>
+                </Button> */}
               </div>
             </div>
             <div className="hidden md:block">

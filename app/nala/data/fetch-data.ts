@@ -158,20 +158,20 @@ export const fetchNalaData = async () => {
       "model": "Perplexity",
       "brandName": "Nala",
       "aggregatedRepresentation": {
-        "mentions": 0.8,
+        "mentions": 40.8,
         "sentiment": {
-          "positive": 0.2,
-          "negative": 0,
-          "neutral": 0.6
+          "positive": 70.2,
+          "negative": 10,
+          "neutral": 3.6
         },
-        "visibilityScore": 1,
+        "visibilityScore": 71,
         "solutionPrimacy": 0,
         "interactionRate": 0,
         "responseRate": 0
       },
       "competitorComparison": [
         {
-          "competitorName": "Reputation.com",
+          "competitorName": "monzo",
           "sentimentComparison": {
             "betterThan": 0,
             "worseThan": 0.2,

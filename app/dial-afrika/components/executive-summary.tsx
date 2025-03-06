@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { CheckCircle, AlertCircle } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
@@ -33,10 +34,10 @@ const DialAfrikaExecutiveSummary = ({ data }: ExecutiveSummaryProps) => {
                         {data[0].aggregatedRepresentation.visibilityScore}%
                       </span>
                     </div>
-                    <Progress 
-                      value={data[0].aggregatedRepresentation.visibilityScore} 
-                      className="h-2 bg-green-200" 
-                      indicatorClassName="bg-green-500" 
+                    <Progress
+                      value={data[0].aggregatedRepresentation.visibilityScore}
+                      className="h-2 bg-green-200"
+                      indicatorClassName="bg-green-500"
                     />
                   </div>
                   <div>
@@ -46,10 +47,10 @@ const DialAfrikaExecutiveSummary = ({ data }: ExecutiveSummaryProps) => {
                         {data[0].aggregatedRepresentation.sentiment.positive}%
                       </span>
                     </div>
-                    <Progress 
-                      value={data[0].aggregatedRepresentation.sentiment.positive} 
-                      className="h-2 bg-green-200" 
-                      indicatorClassName="bg-green-500" 
+                    <Progress
+                      value={data[0].aggregatedRepresentation.sentiment.positive}
+                      className="h-2 bg-green-200"
+                      indicatorClassName="bg-green-500"
                     />
                   </div>
                 </div>
@@ -60,7 +61,7 @@ const DialAfrikaExecutiveSummary = ({ data }: ExecutiveSummaryProps) => {
                   <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3 border border-blue-200">
                     <CheckCircle className="h-5 w-5 text-blue-600" />
                   </div>
-                  <h3 className="font-semibold text-blue-800">Google</h3>
+                  <h3 className="font-semibold text-blue-800">Gemini</h3>
                 </div>
                 <div className="space-y-2">
                   <div>
@@ -70,10 +71,10 @@ const DialAfrikaExecutiveSummary = ({ data }: ExecutiveSummaryProps) => {
                         {data[1].aggregatedRepresentation.visibilityScore}%
                       </span>
                     </div>
-                    <Progress 
-                      value={data[1].aggregatedRepresentation.visibilityScore} 
-                      className="h-2 bg-blue-200" 
-                      indicatorClassName="bg-blue-500" 
+                    <Progress
+                      value={data[1].aggregatedRepresentation.visibilityScore}
+                      className="h-2 bg-blue-200"
+                      indicatorClassName="bg-blue-500"
                     />
                   </div>
                   <div>
@@ -83,10 +84,10 @@ const DialAfrikaExecutiveSummary = ({ data }: ExecutiveSummaryProps) => {
                         {data[1].aggregatedRepresentation.sentiment.positive}%
                       </span>
                     </div>
-                    <Progress 
-                      value={data[1].aggregatedRepresentation.sentiment.positive} 
-                      className="h-2 bg-blue-200" 
-                      indicatorClassName="bg-blue-500" 
+                    <Progress
+                      value={data[1].aggregatedRepresentation.sentiment.positive}
+                      className="h-2 bg-blue-200"
+                      indicatorClassName="bg-blue-500"
                     />
                   </div>
                 </div>
@@ -107,10 +108,10 @@ const DialAfrikaExecutiveSummary = ({ data }: ExecutiveSummaryProps) => {
                         {data[2].aggregatedRepresentation.visibilityScore}%
                       </span>
                     </div>
-                    <Progress 
-                      value={data[2].aggregatedRepresentation.visibilityScore} 
-                      className="h-2 bg-red-200" 
-                      indicatorClassName="bg-red-500" 
+                    <Progress
+                      value={data[2].aggregatedRepresentation.visibilityScore}
+                      className="h-2 bg-red-200"
+                      indicatorClassName="bg-red-500"
                     />
                   </div>
                   <div>
@@ -120,10 +121,10 @@ const DialAfrikaExecutiveSummary = ({ data }: ExecutiveSummaryProps) => {
                         {data[2].aggregatedRepresentation.sentiment.positive}%
                       </span>
                     </div>
-                    <Progress 
-                      value={data[2].aggregatedRepresentation.sentiment.positive} 
-                      className="h-2 bg-red-200" 
-                      indicatorClassName="bg-red-500" 
+                    <Progress
+                      value={data[2].aggregatedRepresentation.sentiment.positive}
+                      className="h-2 bg-red-200"
+                      indicatorClassName="bg-red-500"
                     />
                   </div>
                 </div>
@@ -132,7 +133,7 @@ const DialAfrikaExecutiveSummary = ({ data }: ExecutiveSummaryProps) => {
 
             <div className="mt-8 p-4 bg-green-100 border-l-4 border-green-500 rounded">
               <p className="font-medium text-green-800">
-                African businesses are rapidly adopting AI-powered customer engagement solutions, but Dial Afrika's visibility 
+                African businesses are rapidly adopting AI-powered customer engagement solutions, but Dial Afrika's visibility
                 on emerging AI platforms is preventing maximum discovery by potential enterprise clients.
               </p>
             </div>

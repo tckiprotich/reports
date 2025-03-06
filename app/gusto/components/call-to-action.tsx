@@ -39,11 +39,11 @@ const GustoCallToAction = () => {
                 size="lg"
                 asChild
               >
-                <a href="https://lantern.ai/demo">Book a Strategy Session</a>
+                <a href="https://calendly.com/gideon-at-lantern/30min">Book a Strategy Session</a>
               </Button>
-              <Button variant="outline" className="border-white text-white hover:bg-white/10" size="lg" asChild>
+              {/* <Button variant="outline" className="border-white text-white hover:bg-white/10" size="lg" asChild>
                 <a href="mailto:hello@lantern.ai">Contact Us</a>
-              </Button>
+              </Button> */}
             </div>
           </div>
           <div className="hidden md:block">

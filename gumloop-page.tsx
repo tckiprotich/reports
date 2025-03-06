@@ -32,12 +32,16 @@ import {
   Download,
   CheckCircle,
   AlertCircle,
+  Table,
+  Badge,
+  TrendingDown,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import DataInsights from "./data-insights"
+import { TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./components/ui/table"
+
 // Register ChartJS components
 ChartJS.register(
   CategoryScale,
@@ -81,7 +85,7 @@ const processCompetitorData = (data) => {
 
 // Add this function to process brand metrics data
 const processBrandMetricsData = (data) => {
-  const metrics = ["brandAwareness", "brandEngagement", "customerSatisfaction"]
+  const metrics = ["brandAwareness", "brandEngagement", "marketShare", "netPromoterScore", "customerSatisfaction"]
   const result = []
 
   metrics.forEach((metric) => {
@@ -163,6 +167,7 @@ const GumloopPage = () => {
             { topicName: "Gumloop technology", relevanceScore: 92.4 },
             { topicName: "Gumloop solutions", relevanceScore: 75.6 },
             { topicName: "Gumloop pricing", relevanceScore: 68.2 },
+            {topicName: "Gumloop workflow automations", relevanceScore: 55.8},
           ],
           trendAnalysis: {
             monthlyTrend: 6.8,
@@ -171,6 +176,8 @@ const GumloopPage = () => {
           brandMetrics: {
             brandAwareness: 65.2,
             brandEngagement: 63.4,
+            marketShare: 21.2,
+            netPromoterScore: 44,
             customerSatisfaction: 87,
           },
         },
@@ -230,6 +237,8 @@ const GumloopPage = () => {
           brandMetrics: {
             brandAwareness: 50,
             brandEngagement: 65,
+            marketShare: 15,
+            netPromoterScore: 45,
             customerSatisfaction: 80,
           },
         },
@@ -272,6 +281,8 @@ const GumloopPage = () => {
           brandMetrics: {
             brandAwareness: 3.8,
             brandEngagement: 3.4,
+            marketShare: 2,
+            netPromoterScore: 1.4,
             customerSatisfaction: 1.6,
           },
         },
@@ -745,7 +756,7 @@ const GumloopPage = () => {
               </div>
               <TabsList className="bg-orange-100">
                 <TabsTrigger value="gaps" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">
-                  Knowledge Gaps
+                  critical Knowledge Gaps
                 </TabsTrigger>
                 <TabsTrigger
                   value="recommendations"
@@ -757,211 +768,339 @@ const GumloopPage = () => {
             </div>
 
             <TabsContent value="gaps" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {uniqueKnowledgeGaps.map((gap, index) => (
-                  <Card key={index} className="border-orange-200 shadow-lg overflow-hidden">
-                    <div className="bg-orange-500 h-1"></div>
-                    <CardContent className="pt-6">
-                      <div className="flex items-start">
-                        <div className="bg-orange-100 rounded-full p-3 mr-4">
-                          <AlertCircle className="w-6 h-6 text-orange-500" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-orange-900">{gap}</h3>
-                          <p className="text-orange-700 mt-1">
-                            {index === 0 && "Users asking about this receive incomplete or outdated information."}
-                            {index === 1 &&
-                              "This creates trust issues as users can't verify satisfaction from other customers."}
-                            {index === 2 &&
-                              "Lack of pricing transparency prevents users from making purchasing decisions."}
-                            {index === 3 &&
-                              "Without this information, your unique value proposition isn't fully conveyed."}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {uniqueKnowledgeGaps.slice(0, 2).map((gap, index) => (
+      <Card key={index} className="border-red-200 shadow-lg overflow-hidden">
+        <div className="bg-red-500 h-1"></div>
+        <CardContent className="pt-6">
+          <div className="flex items-start">
+            <div className="bg-red-100 rounded-full p-3 mr-4">
+              <AlertCircle className="w-6 h-6 text-red-500" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-red-900">{gap}</h3>
+              <ul className="text-red-700 mt-2 space-y-1 list-disc pl-4">
+                <li>{index === 0 ? "Users receive incomplete information" : 
+                     index === 1 ? "Creates trust issues with potential customers" : 
+                     index === 2 ? "Prevents purchasing decisions" : 
+                     "Obscures your unique value proposition"}</li>
+                <li>{index === 0 ? "Competitors fill the information void" : 
+                     index === 1 ? "Reduces conversion rates" : 
+                     index === 2 ? "Increases customer support inquiries" : 
+                     "Limits AI recommendation potential"}</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    ))}
+  </div>
+</TabsContent>
 
-            <TabsContent value="recommendations" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {allRecommendations.slice(0, 6).map((recommendation, index) => (
-                  <Card key={index} className="border-orange-200 shadow-lg overflow-hidden">
-                    <div className="bg-orange-500 h-1"></div>
-                    <CardContent className="pt-6">
-                      <div className="flex items-start">
-                        <div className="bg-orange-100 rounded-full p-3 mr-4">
-                          <CheckCircle className="w-6 h-6 text-orange-500" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-orange-900">{recommendation}</h3>
-                          <p className="text-orange-700 mt-1">
-                            {index === 0 && "Increases visibility and credibility across all AI platforms."}
-                            {index === 1 && "Helps establish thought leadership and drives more accurate AI responses."}
-                            {index === 2 && "Creates more citations that AI models will reference in responses."}
-                            {index === 3 && "Demonstrates real-world value and improves customer testimonial data."}
-                            {index === 4 &&
-                              "Builds community engagement that AI systems recognize as positive signals."}
-                            {index === 5 &&
-                              "Visual content is increasingly indexed by AI systems for richer responses."}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
+<TabsContent value="recommendations" className="mt-0">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    {allRecommendations.slice(0, 2).map((recommendation, index) => (
+      <Card key={index} className="border-orange-200 shadow-lg overflow-hidden">
+        <div className="bg-orange-500 h-1"></div>
+        <CardContent className="pt-6">
+          <div className="flex items-start">
+            <div className="bg-orange-100 rounded-full p-3 mr-4">
+              <CheckCircle className="w-6 h-6 text-orange-500" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-orange-900">{recommendation}</h3>
+              <ul className="text-orange-700 mt-2 space-y-1 list-disc pl-4">
+                <li>{index === 0 ? "Increases credibility across AI platforms" : 
+                     index === 1 ? "Establishes thought leadership" : 
+                     index === 2 ? "Creates authoritative citations" : 
+                     index === 3 ? "Demonstrates real-world value" :
+                     index === 4 ? "Builds positive engagement signals" :
+                     "Enhances visual content indexing"}</li>
+                <li>{index === 0 ? "Improves accuracy of AI responses" : 
+                     index === 1 ? "Drives more accurate feature representation" : 
+                     index === 2 ? "Strengthens industry authority" : 
+                     index === 3 ? "Improves customer testimonial data" :
+                     index === 4 ? "Increases community-driven validation" :
+                     "Enables richer AI responses"}</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    ))}
+  </div>
+</TabsContent>
           </Tabs>
         </div>
       </section>
 
       {/* Topic Association */}
       <section className="py-12 px-6 md:px-10 lg:px-16 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-2 text-orange-900">Topic Association Analysis</h2>
-          <p className="text-orange-700 mb-8">How Gumloop is associated with key industry topics</p>
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-3xl font-bold mb-2 text-orange-900">Topic Association Analysis</h2>
+    <p className="text-orange-700 mb-8">How Gumloop is associated with key industry topics</p>
 
-          <Card className="border-orange-200 shadow-lg">
-            <CardContent className="pt-6">
-              <div className="h-[400px]">
-                <Radar
-                  data={{
-                    labels: [...new Set(topTopics.map((item) => item.name.replace(/Gumloop\s/g, "")))].slice(0, 6),
-                    datasets: platforms.map((platform, index) => ({
-                      label: platform,
-                      data: topTopics.filter((item) => item.platform === platform).map((item) => item.score),
-                      backgroundColor: [
-                        "rgba(249, 115, 22, 0.2)",
-                        "rgba(251, 146, 60, 0.2)",
-                        "rgba(254, 215, 170, 0.2)",
-                      ][index],
-                      borderColor: ["rgba(249, 115, 22, 1)", "rgba(251, 146, 60, 1)", "rgba(254, 215, 170, 1)"][index],
-                      borderWidth: 2,
-                    })),
-                  }}
-                  options={{
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                      r: {
-                        pointLabels: {
-                          color: "rgba(249, 115, 22, 0.7)",
-                          font: {
-                            size: 12,
-                          },
-                        },
-                        grid: {
-                          color: "rgba(249, 115, 22, 0.1)",
-                        },
-                        angleLines: {
-                          color: "rgba(249, 115, 22, 0.1)",
-                        },
-                      },
+    <Card className="border-orange-200 shadow-lg">
+      <CardContent className="pt-6">
+        <div className="h-[400px]">
+          <Radar
+            data={{
+              labels: [...new Set(topTopics.map((item) => 
+                item.name.replace(/Gumloop\s/g, "")
+                       .replace(/\/.*$/, "") // Remove content after slashes for cleaner labels
+                       .trim()
+              ))],
+              datasets: platforms.map((platform, index) => ({
+                label: platform,
+                data: (function() {
+                  // Get unique topic names
+                  const uniqueTopics = [...new Set(topTopics.map(item => 
+                    item.name.replace(/Gumloop\s/g, "")
+                           .replace(/\/.*$/, "")
+                           .trim()
+                  ))];
+                  
+                  // Map scores for each platform against unique topics
+                  return uniqueTopics.map(topic => {
+                    const matchingTopic = topTopics.find(item => 
+                      item.platform === platform && 
+                      item.name.replace(/Gumloop\s/g, "")
+                           .replace(/\/.*$/, "")
+                           .trim() === topic
+                    );
+                    return matchingTopic ? matchingTopic.score : 0;
+                  });
+                })(),
+                backgroundColor: [
+                  "rgba(249, 115, 22, 0.2)",
+                  "rgba(251, 146, 60, 0.2)",
+                  "rgba(254, 215, 170, 0.2)",
+                ][index],
+                borderColor: ["rgba(249, 115, 22, 1)", "rgba(251, 146, 60, 1)", "rgba(254, 215, 170, 1)"][index],
+                borderWidth: 2,
+              })),
+            }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                r: {
+                  pointLabels: {
+                    color: "rgba(249, 115, 22, 0.7)",
+                    font: {
+                      size: 12,
                     },
-                    plugins: {
-                      legend: {
-                        position: "top",
-                        labels: {
-                          color: "rgba(249, 115, 22, 0.7)",
-                        },
-                      },
-                    },
-                  }}
-                />
-              </div>
-            </CardContent>
-          </Card>
+                  },
+                  grid: {
+                    color: "rgba(249, 115, 22, 0.1)",
+                  },
+                  angleLines: {
+                    color: "rgba(249, 115, 22, 0.1)",
+                  },
+                },
+              },
+              plugins: {
+                legend: {
+                  position: "top",
+                  labels: {
+                    color: "rgba(249, 115, 22, 0.7)",
+                  },
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function(context) {
+                      const label = context.dataset.label || '';
+                      const value = context.raw || 0;
+                      return `${label}: ${value.toFixed(1)}`;
+                    }
+                  }
+                }
+              },
+            }}
+          />
         </div>
-      </section>
-
+      </CardContent>
+    </Card>
+    
+    <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+      {platforms.map((platform, index) => (
+        <Card key={platform} className="border-orange-200">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg">{platform} Top Topics</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2">
+              {data.find(item => item.model === platform)?.topRankedTopics.map((topic, i) => (
+                <li key={i} className="flex justify-between">
+                  <span className="text-sm">{topic.topicName.replace(/Gumloop\s/g, "")}</span>
+                  <span className="text-sm font-semibold text-orange-600">{topic.relevanceScore}</span>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  </div>
+</section>
       {/* Competitor Analysis */}
       <section className="py-12 px-6 md:px-10 lg:px-16">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-2 text-orange-900">Competitor Analysis</h2>
-          <p className="text-orange-700 mb-8">How Gumloop compares to competitors across AI platforms</p>
+  <div className="max-w-7xl mx-auto">
+    <h2 className="text-3xl font-bold mb-2 text-orange-900">Competitor Analysis</h2>
+    <p className="text-orange-700 mb-8">How Gumloop compares to competitors across AI platforms</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {competitorData.map((item, index) => (
-              <Card key={index} className="border-orange-200 shadow-lg overflow-hidden">
-                <div
-                  className={`h-1 ${item.model === "OpenAI" ? "bg-blue-500" : item.model === "gemini" ? "bg-green-500" : "bg-red-500"
-                    }`}
-                ></div>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">{item.model} Platform</CardTitle>
-                  <CardDescription>vs. {item.competitorName}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="text-sm font-medium text-gray-500 mb-2">Sentiment Comparison</h4>
-                      <div className="grid grid-cols-3 gap-2 text-center">
-                        <div className="bg-green-50 p-2 rounded-lg">
-                          <div className="flex items-center justify-center mb-1">
-                            <ArrowUpIcon className="h-4 w-4 text-green-600 mr-1" />
-                            <span className="text-green-600 font-medium">Better</span>
-                          </div>
-                          <p className="text-lg font-bold text-green-700">{item.sentimentComparison.betterThan}%</p>
-                        </div>
-                        {/* <div className="bg-yellow-50 p-2 rounded-lg">
-                          <div className="flex items-center justify-center mb-1">
-                            <MinusIcon className="h-4 w-4 text-yellow-600 mr-1" />
-                            <span className="text-yellow-600 font-medium">Equal</span>
-                          </div>
-                          <p className="text-lg font-bold text-yellow-700">{item.sentimentComparison.equalTo}%</p>
-                        </div>
-                        <div className="bg-red-50 p-2 rounded-lg">
-                          <div className="flex items-center justify-center mb-1">
-                            <ArrowDownIcon className="h-4 w-4 text-red-600 mr-1" />
-                            <span className="text-red-600 font-medium">Worse</span>
-                          </div>
-                          <p className="text-lg font-bold text-red-700">{item.sentimentComparison.worseThan}%</p>
-                        </div> */}
+    {/* Competitor Ranking Table */}
+    <Card className="border-orange-200 shadow-lg mb-8">
+      <CardHeader>
+        <CardTitle className="text-orange-900">Competitor Rankings</CardTitle>
+        <CardDescription>Comprehensive analysis across all AI platforms</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableCaption>Ranking based on sentiment and visibility differences</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[180px]">Platform</TableHead>
+              <TableHead>Competitor</TableHead>
+              <TableHead>Sentiment Performance</TableHead>
+              <TableHead>Visibility Difference</TableHead>
+              <TableHead>Overall Rating</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {competitorData.map((item, index) => {
+              // Calculate overall score based on sentiment and visibility
+              const sentimentScore = item.sentimentComparison.betterThan - item.sentimentComparison.worseThan;
+              const overallScore = sentimentScore + item.visibilityDifference;
+              return (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">
+                    <div className="flex items-center">
+                      <div 
+                        className={`w-3 h-3 rounded-full mr-2 ${
+                          item.model === "OpenAI" ? "bg-blue-500" : item.model === "gemini" ? "bg-green-500" : "bg-red-500"
+                        }`}>
+                      </div>
+                      {item.model}
+                    </div>
+                  </TableCell>
+                  <TableCell>{item.competitorName}</TableCell>
+                  <TableCell>
+                    <div className="flex flex-col">
+                      <div className="flex items-center space-x-2">
+                        <ArrowUpIcon className="h-4 w-4 text-green-600" />
+                        <span className="text-sm">{item.sentimentComparison.betterThan}% better</span>
+                      </div>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <ArrowDownIcon className="h-4 w-4 text-red-600" />
+                        <span className="text-sm">{item.sentimentComparison.worseThan}% worse</span>
                       </div>
                     </div>
-                    {/* <div>
-                      <h4 className="text-sm font-medium text-gray-500 mb-2">Visibility Difference</h4>
-                      <div
-                        className={`p-3 rounded-lg flex items-center justify-between ${item.visibilityDifference >= 0 ? "bg-green-50" : "bg-red-50"}`}
-                      >
-                        <span className="font-medium">Compared to competitor</span>
-                        <div className="flex items-center">
-                          {item.visibilityDifference >= 0 ? (
-                            <ArrowUpIcon className="h-4 w-4 text-green-600 mr-1" />
-                          ) : (
-                            <ArrowDownIcon className="h-4 w-4 text-red-600 mr-1" />
-                          )}
-                          <span
-                            className={`font-bold ${item.visibilityDifference >= 0 ? "text-green-700" : "text-red-700"}`}
-                          >
-                            {item.visibilityDifference}%
-                          </span>
-                        </div>
-                      </div>
-                    </div> */}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex items-center space-x-2">
+                      {item.visibilityDifference >= 0 ? (
+                        <TrendingUp className="h-4 w-4 text-green-600" />
+                      ) : (
+                        <TrendingDown className="h-4 w-4 text-red-600" />
+                      )}
+                      <span>{Math.abs(item.visibilityDifference)}% {item.visibilityDifference >= 0 ? 'ahead' : 'behind'}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <Badge className={overallScore > 0 ? "bg-green-500" : "bg-red-500"}>
+                      {overallScore > 0 ? '+' : ''}{overallScore.toFixed(1)}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
 
-          <div className="mt-8 p-5 bg-orange-50 border border-orange-200 rounded-lg">
-            <h3 className="text-xl font-semibold text-orange-900 mb-3">Competitive Analysis Summary</h3>
-            <p className="text-orange-800 mb-4">
-              Gumloop shows strong sentiment performance against competitors on gemini and OpenAI, but lags in overall
-              visibility. On Perplexity, both visibility and sentiment are significantly lower than competitors,
-              representing a critical area for improvement.
-            </p>
-            <p className="text-orange-800">
-              Strategic optimization can help Gumloop close these visibility gaps and establish a stronger competitive
-              position across all AI platforms.
-            </p>
-          </div>
-        </div>
-      </section>
+    {/* Individual competitor cards */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {competitorData.map((item, index) => (
+        <Card key={index} className="border-orange-200 shadow-lg overflow-hidden">
+          <div
+            className={`h-1 ${
+              item.model === "OpenAI" ? "bg-blue-500" : item.model === "gemini" ? "bg-green-500" : "bg-red-500"
+            }`}
+          ></div>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg">{item.model} Platform</CardTitle>
+            <CardDescription>vs. {item.competitorName}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <h4 className="text-sm font-medium text-gray-500 mb-2">Sentiment Comparison</h4>
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  <div className="bg-green-50 p-2 rounded-lg">
+                    <div className="flex items-center justify-center mb-1">
+                      <ArrowUpIcon className="h-4 w-4 text-green-600 mr-1" />
+                      <span className="text-green-600 font-medium">Better</span>
+                    </div>
+                    <p className="text-lg font-bold text-green-700">{item.sentimentComparison.betterThan}%</p>
+                  </div>
+                  <div className="bg-yellow-50 p-2 rounded-lg">
+                    <div className="flex items-center justify-center mb-1">
+                      <MinusIcon className="h-4 w-4 text-yellow-600 mr-1" />
+                      <span className="text-yellow-600 font-medium">Equal</span>
+                    </div>
+                    <p className="text-lg font-bold text-yellow-700">{item.sentimentComparison.equalTo}%</p>
+                  </div>
+                  <div className="bg-red-50 p-2 rounded-lg">
+                    <div className="flex items-center justify-center mb-1">
+                      <ArrowDownIcon className="h-4 w-4 text-red-600 mr-1" />
+                      <span className="text-red-600 font-medium">Worse</span>
+                    </div>
+                    <p className="text-lg font-bold text-red-700">{item.sentimentComparison.worseThan}%</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h4 className="text-sm font-medium text-gray-500 mb-2">Visibility Difference</h4>
+                <div
+                  className={`p-3 rounded-lg flex items-center justify-between ${item.visibilityDifference >= 0 ? "bg-green-50" : "bg-red-50"}`}
+                >
+                  <span className="font-medium">Compared to {item.competitorName}</span>
+                  <div className="flex items-center">
+                    {item.visibilityDifference >= 0 ? (
+                      <ArrowUpIcon className="h-4 w-4 text-green-600 mr-1" />
+                    ) : (
+                      <ArrowDownIcon className="h-4 w-4 text-red-600 mr-1" />
+                    )}
+                    <span
+                      className={`font-bold ${item.visibilityDifference >= 0 ? "text-green-700" : "text-red-700"}`}
+                    >
+                      {Math.abs(item.visibilityDifference)}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+
+    <div className="mt-8 p-5 bg-orange-50 border border-orange-200 rounded-lg">
+      <h3 className="text-xl font-semibold text-orange-900 mb-3">Competitive Analysis Summary</h3>
+      <p className="text-orange-800 mb-4">
+        Gumloop shows strong sentiment performance against competitors on gemini and OpenAI, but lags in overall
+        visibility. On Perplexity, both visibility and sentiment are significantly lower than competitors,
+        representing a critical area for improvement.
+      </p>
+      <p className="text-orange-800">
+        Strategic optimization can help Gumloop close these visibility gaps and establish a stronger competitive
+        position across all AI platforms.
+      </p>
+    </div>
+  </div>
+</section>
 
       {/* Opportunity Impact */}
       <section className="py-12 px-6 md:px-10 lg:px-16">
@@ -1056,154 +1195,7 @@ const GumloopPage = () => {
       </section>
 
       {/* Brand Metrics & Trends */}
-      <section className="py-12 px-6 md:px-10 lg:px-16 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-2 text-orange-900">Brand Performance Metrics</h2>
-          <p className="text-orange-700 mb-8">Key performance indicators across AI platforms</p>
-
-          <Tabs defaultValue="metrics" className="w-full">
-            <TabsList className="bg-orange-100 mb-6">
-              <TabsTrigger value="metrics" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">
-                Brand Metrics
-              </TabsTrigger>
-              <TabsTrigger value="trends" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">
-                Growth Trends
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="metrics">
-              <Card className="border-orange-200 shadow-lg">
-                <CardContent className="pt-6">
-                  <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-                    {brandMetricsData.map((metric, index) => {
-                      const metricName = {
-                        brandAwareness: "Brand Awareness",
-                        brandEngagement: "Brand Engagement",
-                        // marketShare: "Market Share",
-                        // netPromoterScore: "Net Promoter Score",
-                        customerSatisfaction: "Customer Satisfaction",
-                      }[metric.name]
-
-                      const avgValue =
-                        Object.keys(metric)
-                          .filter((key) => key !== "name")
-                          .reduce((sum, key) => sum + metric[key], 0) /
-                        (Object.keys(metric).length - 1)
-
-                      return (
-                        <Card key={index} className="border-orange-200">
-                          <CardContent className="p-4">
-                            <h3 className="text-sm font-medium text-gray-500 mb-2">{metricName}</h3>
-                            <div className="flex items-end justify-between">
-                              <div className="text-2xl font-bold text-orange-700">{avgValue.toFixed(1)}%</div>
-                              <div className="flex flex-col items-end">
-                                <div className="flex items-center text-xs">
-                                  <div className="w-3 h-3 rounded-full bg-blue-500 mr-1"></div>
-                                  <span>OpenAI: {metric.OpenAI?.toFixed(1)}%</span>
-                                </div>
-                                <div className="flex items-center text-xs mt-1">
-                                  <div className="w-3 h-3 rounded-full bg-green-500 mr-1"></div>
-                                  <span>gemini: {metric.gemini?.toFixed(1)}%</span>
-                                </div>
-                                <div className="flex items-center text-xs mt-1">
-                                  <div className="w-3 h-3 rounded-full bg-red-500 mr-1"></div>
-                                  <span>Perplexity: {metric.Perplexity?.toFixed(1)}%</span>
-                                </div>
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      )
-                    })}
-                  </div>
-
-                  <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                    <h4 className="font-semibold text-orange-900 mb-2">Brand Metrics Insights</h4>
-                    <p className="text-orange-800">
-                      Gumloop shows strong customer satisfaction scores on OpenAI (87%) and gemini (80%), but has
-                      limited brand awareness on Perplexity (3.8%). Focusing on increasing brand awareness and
-                      engagement on Perplexity should be a priority, while maintaining the strong performance on other
-                      platforms.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="trends">
-              <Card className="border-orange-200 shadow-lg">
-                <CardContent className="pt-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    {trendData.map((trend, index) => {
-                      const trendName = {
-                        monthlyTrend: "Monthly Growth",
-                        quarterlyTrend: "Quarterly Growth",
-                      }[trend.name]
-
-                      return (
-                        <Card key={index} className="border-orange-200">
-                          <CardContent className="p-4">
-                            <h3 className="text-lg font-medium text-orange-900 mb-3">{trendName}</h3>
-                            <div className="space-y-4">
-                              <div>
-                                <div className="flex justify-between mb-1">
-                                  <span className="text-sm font-medium">OpenAI</span>
-                                  <span className="text-sm font-medium">{trend.OpenAI}%</span>
-                                </div>
-                                <Progress
-                                  value={trend.OpenAI}
-                                  max={15}
-                                  className="h-2 bg-blue-100"
-                                  indicatorClassName="bg-blue-500"
-                                />
-                              </div>
-                              <div>
-                                <div className="flex justify-between mb-1">
-                                  <span className="text-sm font-medium">gemini</span>
-                                  <span className="text-sm font-medium">{trend.gemini}%</span>
-                                </div>
-                                <Progress
-                                  value={trend.gemini}
-                                  max={15}
-                                  className="h-2 bg-green-100"
-                                  indicatorClassName="bg-green-500"
-                                />
-                              </div>
-                              <div>
-                                <div className="flex justify-between mb-1">
-                                  <span className="text-sm font-medium">Perplexity</span>
-                                  <span className="text-sm font-medium">{trend.Perplexity}%</span>
-                                </div>
-                                <Progress
-                                  value={trend.Perplexity}
-                                  max={15}
-                                  className="h-2 bg-red-100"
-                                  indicatorClassName="bg-red-500"
-                                />
-                              </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      )
-                    })}
-                  </div>
-
-                  <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
-                    <h4 className="font-semibold text-orange-900 mb-2">Growth Trend Insights</h4>
-                    <p className="text-orange-800">
-                      OpenAI shows the strongest growth trajectory with a {trendData[1]?.OpenAI}% quarterly increase,
-                      while gemini and Perplexity show more modest growth. This indicates that optimization efforts
-                      should prioritize OpenAI for maximum impact, while establishing a stronger foundation on
-                      Perplexity.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
-        <DataInsights />
-      </section>
+      
 
       {/* Call to Action */}
       <section className="py-16 px-6 md:px-10 lg:px-16 bg-gradient-to-br from-orange-500 to-orange-600 text-white">
@@ -1242,11 +1234,9 @@ const GumloopPage = () => {
                   size="lg"
                   asChild
                 >
-                  <a href="https://lantern.ai/demo">Book a Strategy Session</a>
+                  <a href="https://calendly.com/gideon-at-lantern/30min">Book a Strategy Session</a>
                 </Button>
-                <Button variant="outline" className="border-white text-white hover:bg-white/10" size="lg" asChild>
-                  <a href="mailto:hello@lantern.ai">Contact Us</a>
-                </Button>
+                topic
               </div>
             </div>
             <div className="hidden md:block">

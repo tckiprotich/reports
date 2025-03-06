@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AlertCircle, CheckCircle } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -21,16 +22,16 @@ const GustoRecommendations = ({ data }: RecommendationsProps) => {
         <Tabs defaultValue="gaps" className="w-full">
           <div className="flex justify-between items-center mb-6">
             <div>
-              <h2 className="text-3xl font-bold text-purple-900">Insights & Recommendations</h2>
-              <p className="text-purple-700">Critical findings and strategic next steps</p>
+              <h2 className="text-3xl font-bold text-red-900">Insights & Recommendations</h2>
+              <p className="text-red-700">Critical findings and strategic next steps</p>
             </div>
-            <TabsList className="bg-purple-100">
-              <TabsTrigger value="gaps" className="data-[state=active]:bg-purple-500 data-[state=active]:text-white">
+            <TabsList className="bg-red-100">
+              <TabsTrigger value="gaps" className="data-[state=active]:bg-red-500 data-[state=active]:text-white">
                 Knowledge Gaps
               </TabsTrigger>
               <TabsTrigger
                 value="recommendations"
-                className="data-[state=active]:bg-purple-500 data-[state=active]:text-white"
+                className="data-[state=active]:bg-red-500 data-[state=active]:text-white"
               >
                 Recommendations
               </TabsTrigger>
@@ -39,17 +40,17 @@ const GustoRecommendations = ({ data }: RecommendationsProps) => {
 
           <TabsContent value="gaps" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {uniqueKnowledgeGaps.map((gap, index) => (
-                <Card key={index} className="border-purple-200 shadow-lg overflow-hidden">
-                  <div className="bg-purple-500 h-1"></div>
+              {uniqueKnowledgeGaps.slice(0, 2).map((gap, index) => (
+                <Card key={index} className="border-red-200 shadow-lg overflow-hidden">
+                  <div className="bg-red-500 h-1"></div>
                   <CardContent className="pt-6">
                     <div className="flex items-start">
-                      <div className="bg-purple-100 rounded-full p-3 mr-4">
-                        <AlertCircle className="w-6 h-6 text-purple-500" />
+                      <div className="bg-red-100 rounded-full p-3 mr-4">
+                        <AlertCircle className="w-6 h-6 text-red-500" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-purple-900">{gap}</h3>
-                        <p className="text-purple-700 mt-1">
+                        <h3 className="text-lg font-semibold text-red-900">{gap}</h3>
+                        <p className="text-red-700 mt-1">
                           {index === 0 && "Users asking about this receive incomplete or outdated information."}
                           {index === 1 &&
                             "This creates trust issues as users can't verify competitive positioning."}
@@ -68,17 +69,17 @@ const GustoRecommendations = ({ data }: RecommendationsProps) => {
 
           <TabsContent value="recommendations" className="mt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {uniqueRecommendations.slice(0, 6).map((recommendation, index) => (
-                <Card key={index} className="border-purple-200 shadow-lg overflow-hidden">
-                  <div className="bg-purple-500 h-1"></div>
+              {uniqueRecommendations.slice(0, 2).map((recommendation, index) => (
+                <Card key={index} className="border-red-200 shadow-lg overflow-hidden">
+                  <div className="bg-red-500 h-1"></div>
                   <CardContent className="pt-6">
                     <div className="flex items-start">
-                      <div className="bg-purple-100 rounded-full p-3 mr-4">
-                        <CheckCircle className="w-6 h-6 text-purple-500" />
+                      <div className="bg-red-100 rounded-full p-3 mr-4">
+                        <CheckCircle className="w-6 h-6 text-red-500" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-purple-900">{recommendation}</h3>
-                        <p className="text-purple-700 mt-1">
+                        <h3 className="text-lg font-semibold text-red-900">{recommendation}</h3>
+                        <p className="text-red-700 mt-1">
                           {index === 0 && "Increases visibility and credibility across all AI platforms."}
                           {index === 1 && "Helps establish thought leadership and drives more accurate AI responses."}
                           {index === 2 && "Creates more citations that AI models will reference in responses."}

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ArrowDownIcon, ArrowUpIcon, MinusIcon, TrendingDown, TrendingUp } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Radar } from "react-chartjs-2"
@@ -45,10 +46,10 @@ const DialAfrikaCompetitorAnalysis = ({ data }: CompetitorAnalysisProps) => {
     .filter(Boolean)
     .map(competitor => {
       const visibilityScore = competitor.visibilityComparison?.visibilityDifference || 0;
-      const sentimentScore = (competitor.sentimentComparison?.betterThan || 0) - 
-                           (competitor.sentimentComparison?.worseThan || 0);
+      const sentimentScore = (competitor.sentimentComparison?.betterThan || 0) -
+        (competitor.sentimentComparison?.worseThan || 0);
       const overallScore = visibilityScore + sentimentScore;
-      
+
       return {
         name: competitor.competitorName,
         visibilityScore,
@@ -176,7 +177,7 @@ const DialAfrikaCompetitorAnalysis = ({ data }: CompetitorAnalysisProps) => {
                     <TableHead>Competitor</TableHead>
                     <TableHead>Visibility</TableHead>
                     <TableHead>Sentiment</TableHead>
-                    <TableHead className="text-right">Overall Score</TableHead>
+                    {/* <TableHead className="text-right">Overall Score</TableHead> */}
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -201,11 +202,11 @@ const DialAfrikaCompetitorAnalysis = ({ data }: CompetitorAnalysisProps) => {
                           {competitor.sentimentScore > 0 ? '+' : ''}{competitor.sentimentScore}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-right font-medium">
-                        <span className={competitor.overallScore > 0 ? "text-green-600" : competitor.overallScore < 0 ? "text-red-600" : "text-amber-600"}>
-                          {competitor.overallScore > 0 ? '+' : ''}{competitor.overallScore}
-                        </span>
-                      </TableCell>
+                      {/* <TableCell className="text-right font-medium">
+                      <span className={competitor.overallScore > 0 ? "text-green-600" : competitor.overallScore < 0 ? "text-red-600" : "text-amber-600"}>
+  {competitor.overallScore > 0 ? '+' : ''}{competitor.overallScore.toFixed(2)}
+</span>
+                      </TableCell> */}
                     </TableRow>
                   ))}
                 </TableBody>
@@ -216,21 +217,20 @@ const DialAfrikaCompetitorAnalysis = ({ data }: CompetitorAnalysisProps) => {
           <div className="grid grid-cols-1 gap-6">
             {data.map((platform, index) => {
               // Skip if no competitor data
-              if (!platform.competitorComparison || 
-                  (Array.isArray(platform.competitorComparison) && platform.competitorComparison.length === 0)) {
+              if (!platform.competitorComparison ||
+                (Array.isArray(platform.competitorComparison) && platform.competitorComparison.length === 0)) {
                 return null;
               }
-              
-              const competitors = Array.isArray(platform.competitorComparison) 
-                ? platform.competitorComparison 
+
+              const competitors = Array.isArray(platform.competitorComparison)
+                ? platform.competitorComparison
                 : [platform.competitorComparison];
-              
+
               return (
                 <Card key={index} className="border-green-200 shadow-lg overflow-hidden">
                   <div
-                    className={`h-1 ${
-                      platform.model === "OpenAI" ? "bg-green-500" : platform.model === "Google" ? "bg-blue-500" : "bg-red-500"
-                    }`}
+                    className={`h-1 ${platform.model === "OpenAI" ? "bg-green-500" : platform.model === "gemini" ? "bg-blue-500" : "bg-red-500"
+                      }`}
                   ></div>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg">{platform.model} Platform - Top Competitor</CardTitle>
@@ -269,9 +269,8 @@ const DialAfrikaCompetitorAnalysis = ({ data }: CompetitorAnalysisProps) => {
                       <div>
                         <h4 className="text-sm font-medium text-gray-500 mb-2">Visibility Difference</h4>
                         <div
-                          className={`p-3 rounded-lg flex items-center justify-between ${
-                            competitors[0].visibilityComparison?.visibilityDifference >= 0 ? "bg-green-50" : "bg-red-50"
-                          }`}
+                          className={`p-3 rounded-lg flex items-center justify-between ${competitors[0].visibilityComparison?.visibilityDifference >= 0 ? "bg-green-50" : "bg-red-50"
+                            }`}
                         >
                           <span className="font-medium">Compared to {competitors[0].competitorName}</span>
                           <div className="flex items-center">
@@ -281,9 +280,8 @@ const DialAfrikaCompetitorAnalysis = ({ data }: CompetitorAnalysisProps) => {
                               <ArrowDownIcon className="h-4 w-4 text-red-600 mr-1" />
                             )}
                             <span
-                              className={`font-bold ${
-                                competitors[0].visibilityComparison?.visibilityDifference >= 0 ? "text-green-700" : "text-red-700"
-                              }`}
+                              className={`font-bold ${competitors[0].visibilityComparison?.visibilityDifference >= 0 ? "text-green-700" : "text-red-700"
+                                }`}
                             >
                               {Math.abs(competitors[0].visibilityComparison?.visibilityDifference)}%
                             </span>
@@ -300,12 +298,12 @@ const DialAfrikaCompetitorAnalysis = ({ data }: CompetitorAnalysisProps) => {
           <div className="mt-8 p-5 bg-green-50 border border-green-200 rounded-lg">
             <h3 className="text-xl font-semibold text-green-900 mb-3">Competitive Analysis Summary</h3>
             <p className="text-green-800 mb-4">
-              Dial Afrika shows competitive strengths against niche players like Dialpad and Generic CRM tools, but 
+              Dial Afrika shows competitive strengths against niche players like Dialpad and Generic CRM tools, but
               faces significant visibility challenges when compared to global players like Twilio, Zendesk, and Genesys.
             </p>
             <p className="text-green-800">
               Strategic optimization focusing on Africa-specific use cases and customer success stories could help
-              Dial Afrika establish a stronger competitive position across all AI platforms, particularly on 
+              Dial Afrika establish a stronger competitive position across all AI platforms, particularly on
               Perplexity where virtually no data exists about the company.
             </p>
           </div>

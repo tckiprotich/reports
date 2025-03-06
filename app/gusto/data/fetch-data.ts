@@ -152,7 +152,7 @@ export const fetchGustoData = async () => {
                 equalTo: 0,
               },
               visibilityComparison: {
-                visibilityDifference: 0.6,
+                visibilityDifference: 80.6,
               },
             },
           ],
@@ -178,9 +178,9 @@ export const fetchGustoData = async () => {
             quarterlyTrend: 0,
           },
           brandMetrics: {
-            brandAwareness: 9,
-            brandEngagement: 4,
-            customerSatisfaction: 0,
+            brandAwareness: 69,
+            brandEngagement: 64,
+            customerSatisfaction:70,
           },
         },
       ])

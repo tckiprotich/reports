@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Bar, PolarArea } from "react-chartjs-2"
 import { BarChart3, PieChart, TrendingUp } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"

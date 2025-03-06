@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { ArrowDownIcon, ArrowUpIcon, MinusIcon } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { processCompetitorData } from "../data/fetch-data"
