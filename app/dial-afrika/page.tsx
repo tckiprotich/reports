@@ -145,8 +145,6 @@ export default function DialAfrikaPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-white text-green-950" id="dial-afrika-report">
       <DialAfrikaHeader 
-        downloadPDF={downloadPDF} 
-        downloadingPDF={downloadingPDF} 
       />
       <DialAfrikaExecutiveSummary data={data} />
       <DialAfrikaVisibilityAnalysis data={data} />

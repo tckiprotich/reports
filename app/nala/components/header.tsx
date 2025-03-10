@@ -23,16 +23,7 @@ const NalaHeader = ({ downloadPDF, downloadingPDF }: HeaderProps) => {
               <p className="font-bold">Lantern AI</p>
             </div>
           </div>
-          <Button
-            onClick={downloadPDF}
-            disabled={downloadingPDF}
-            size="sm"
-            variant="outline"
-            className="text-white border-white hover:bg-white/10 flex items-center space-x-1"
-          >
-            <Download className="h-4 w-4 mr-1" />
-            {downloadingPDF ? "Downloading..." : "Download PDF"}
-          </Button>
+         
         </div>
         <div className="py-16 md:py-24 text-center">
           <div className="mx-auto w-20 h-20 bg-white rounded-full flex items-center justify-center mb-6">
