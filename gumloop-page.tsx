@@ -1106,11 +1106,11 @@ const GumloopPage = () => {
               <div className="h-[300px]">
                 <Line
                   data={{
-                    labels: ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"],
+                    labels: ["Month 1", "Month 2", "Month 3"],
                     datasets: [
                       {
                         label: "Expected Visibility Growth",
-                        data: [5, 25, 45, 70, 85, 95],
+                        data: [5, 45, 75],
                         borderColor: "rgba(249, 115, 22, 1)",
                         backgroundColor: "rgba(249, 115, 22, 0.2)",
                         fill: true,
@@ -1118,7 +1118,7 @@ const GumloopPage = () => {
                       },
                       {
                         label: "Without Optimization",
-                        data: [5, 7, 10, 12, 15, 17],
+                        data: [5, 7, 10],
                         borderColor: "rgba(251, 146, 60, 1)",
                         backgroundColor: "rgba(251, 146, 60, 0.2)",
                         borderDash: [5, 5],

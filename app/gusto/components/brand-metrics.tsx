@@ -80,11 +80,11 @@ const GustoBrandMetrics = ({ data }: BrandMetricsProps) => {
             <div className="h-[300px]">
               <Line
                 data={{
-                  labels: ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"],
+                  labels: ["Month 1", "Month 2", "Month 3"],
                   datasets: [
                     {
                       label: "Expected Visibility Growth",
-                      data: [5, 30, 50, 75, 90, 95],
+                      data: [ 30, 50, 75],
                       borderColor: "rgba(124, 58, 237, 1)",
                       backgroundColor: "rgba(124, 58, 237, 0.2)",
                       fill: true,

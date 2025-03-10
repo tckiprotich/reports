@@ -81,11 +81,11 @@ const DialAfrikaBrandMetrics = ({ data }: BrandMetricsProps) => {
             <div className="h-[300px]">
               <Line
                 data={{
-                  labels: ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"],
+                  labels: ["Month 1", "Month 2", "Month 3"],
                   datasets: [
                     {
                       label: "Expected Visibility Growth",
-                      data: [6, 25, 40, 65, 80, 90],
+                      data: [6, 65, 80],
                       borderColor: "rgba(21, 128, 61, 1)",
                       backgroundColor: "rgba(21, 128, 61, 0.2)",
                       fill: true,

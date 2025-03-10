@@ -976,11 +976,11 @@ const LemlistPage = () => {
               <div className="h-[300px]">
                 <Line
                   data={{
-                    labels: ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"],
+                    labels: ["Month 1", "Month 2", "Month 3"],
                     datasets: [
                       {
                         label: "Expected Visibility Growth",
-                        data: [5, 25, 45, 70, 85, 95],
+                        data: [25, 45, 70],
                         borderColor: "rgba(59, 130, 246, 1)",
                         backgroundColor: "rgba(59, 130, 246, 0.2)",
                         fill: true,

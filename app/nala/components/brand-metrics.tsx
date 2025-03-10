@@ -111,11 +111,11 @@ const NalaBrandMetrics = ({ data }: BrandMetricsProps) => {
             <div className="h-[300px]">
               <Line
                 data={{
-                  labels: ["Month 1", "Month 2", "Month 3", "Month 4", "Month 5", "Month 6"],
+                  labels: ["Month 1", "Month 2", "Month 3"],
                   datasets: [
                     {
                       label: "Expected Visibility Growth",
-                      data: [5, 25, 45, 65, 85, 95],
+                      data: [5 , 65, 85],
                       borderColor: "rgba(30, 64, 175, 1)",
                       backgroundColor: "rgba(30, 64, 175, 0.2)",
                       fill: true,
